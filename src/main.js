@@ -45,9 +45,9 @@ function collectState() {
 
     // @todo: использование
     // result = applySorting(result, state, action);
-    // result = applySearching(result, state, action);
     query = applyPagination(query, state, action); // обновляем query
     query = applyFiltering(query, state, action);
+    query = applySearching(query, state, action);
 
     const { total, items } = await api.getRecords(query);
 
