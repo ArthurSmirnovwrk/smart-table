@@ -48,9 +48,11 @@ function collectState() {
     // result = applySorting(result, state, action);
     // result = applyFiltering(result, state, action);
     // result = applySearching(result, state, action);
+    query = applyPagination(query, state, action); // обновляем query
 
     const { total, items } = await api.getRecords(query);
 
+    updatePagination(total, query);
     sampleTable.render(items)
 }
 
@@ -65,7 +67,7 @@ const sampleTable = initTable({
 
 const applySearching = initSearching('search');
 
-const applyPagination = initPagination(
+const {applyPagination, updatePagination} = initPagination(
     sampleTable.pagination.elements,             // передаём сюда элементы пагинации, найденные в шаблоне
     (el, page, isCurrent) => {                    // и колбэк, чтобы заполнять кнопки страниц данными
         const input = el.querySelector('input');
